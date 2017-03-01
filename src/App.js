@@ -27,7 +27,8 @@ const Board = React.createClass({
             const url = `https://api.icndb.com/jokes/random/${this.props.count}`;
             fetch(url)
                 .then((response) => response.json())
-                .then(json => json.value.forEach(joke => this.add(joke.joke)))
+                .then(json => json.value.filter((joke) => joke.joke.length < 191))
+                .then(array => array.forEach(entry => this.add(entry.joke)))
                 .catch((error) => {
                     console.log('no connection to API', error);
                 });
@@ -70,11 +71,15 @@ const Board = React.createClass({
             {note.note}
         </Note>);
     },
+    refresh(){
+        window.location.reload();
+    },
     render() {
         return(
             <div className="board">
                 {this.state.notes.map(this.eachNote)}
                 <button onClick={() => this.add('New Note')}>+</button>
+                <button id="reload" onClick={this.refresh}>&#8635;</button>
             </div>
         );
     }
