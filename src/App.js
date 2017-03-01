@@ -73,12 +73,13 @@ const Board = React.createClass({
     },
     refresh(){
         window.location.reload();
+
     },
     render() {
         return(
             <div className="board">
                 {this.state.notes.map(this.eachNote)}
-                <button onClick={() => this.add('New Note')}>+</button>
+                <button onClick={() => this.add('Add your Chuck Norris joke (or something else)')}>+</button>
                 <button id="reload" onClick={this.refresh}>&#8635;</button>
             </div>
         );
