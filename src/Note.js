@@ -12,9 +12,10 @@ const Note = React.createClass({
     },
     componentWillMount(){
         this.style = {
-            right: this.randomBetween(0, window.innerWidth - 150, 'px'),
-            top: this.randomBetween(0, window.innerHeight - 150, 'px')
-        }
+            right: this.randomBetween(0, window.innerWidth - 300, 'px'),
+            top: this.randomBetween(0, window.innerHeight - 300, 'px'),
+            backgroundColor: this.randomColorSet()
+    }
     },
     componentDidUpdate() {
         if(this.state.editing) {
@@ -27,6 +28,12 @@ const Note = React.createClass({
     },
     randomBetween(x, y, s){
         return (x + Math.ceil(Math.random() * (y - x))) + s;
+    },
+    randomColor() {
+        return Math.ceil(Math.random() * (101)) + 100;
+    },
+    randomColorSet() {
+        return `rgba(${this.randomColor()}, ${this.randomColor()}, ${this.randomColor()}, 1)`;
     },
     edit() {
         this.setState({ editing: true });

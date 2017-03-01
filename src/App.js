@@ -22,16 +22,19 @@ const Board = React.createClass({
             notes: []
         }
     },
+    fetchJokes() {
+        const url = `https://api.icndb.com/jokes/random/${this.props.count}`;
+        fetch(url)
+            .then((response) => response.json())
+            .then(json => json.value.filter((joke) => joke.joke.length < 191))
+            .then(array => array.forEach(entry => this.add(entry.joke.replace(/&quot;/g, '"'))))
+            .catch((error) => {
+                console.log('no connection to API', error);
+            });
+    },
     componentWillMount() {
         if(this.props.count) {
-            const url = `https://api.icndb.com/jokes/random/${this.props.count}`;
-            fetch(url)
-                .then((response) => response.json())
-                .then(json => json.value.filter((joke) => joke.joke.length < 191))
-                .then(array => array.forEach(entry => this.add(entry.joke)))
-                .catch((error) => {
-                    console.log('no connection to API', error);
-                });
+            this.fetchJokes();
         }
     },
     nextID() {
@@ -72,8 +75,8 @@ const Board = React.createClass({
         </Note>);
     },
     refresh(){
-        window.location.reload();
-
+        this.setState({notes: []});
+        this.fetchJokes();
     },
     render() {
         return(
