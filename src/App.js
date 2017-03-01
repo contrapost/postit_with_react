@@ -24,7 +24,7 @@ const Board = React.createClass({
     },
     componentWillMount() {
         if(this.props.count) {
-            const url = `http://api.icndb.com/jokes/random/${this.props.count}`;
+            const url = `https://api.icndb.com/jokes/random/${this.props.count}`;
             fetch(url)
                 .then((response) => response.json())
                 .then(json => json.value.forEach(joke => this.add(joke.joke)))
